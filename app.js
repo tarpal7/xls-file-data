@@ -6,7 +6,7 @@ const xlstojson = require("xls-to-json-lc");
 const xlsxtojson = require("xlsx-to-json-lc");
 const csvtojson = require("csvtojson");
 const timeout = require("connect-timeout"); 
-
+const port = process.env.PORT || 3000;
 app.use(timeout(180000));
 app.use(bodyParser.json());
 app.use(
@@ -168,6 +168,6 @@ app.get("/file", function (req, res) {
   }
 });
 
-app.listen("3000", function () {
+app.listen(port, function () {
   console.log("running on 3000...");
 });
