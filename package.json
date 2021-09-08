@@ -1,0 +1,22 @@
+{
+  "name": "excelupload",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "connect-timeout": "^1.9.0",
+    "csvtojson": "^2.0.10",
+    "express": "^4.13.4",
+    "multer": "^1.1.0",
+    "xls-to-json-lc": "^0.3.4",
+    "xlsjs": "^1.0.1",
+    "xlsx-to-json-lc": "^0.5.0"
+  }
+}
