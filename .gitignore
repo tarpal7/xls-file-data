@@ -34,3 +34,5 @@ node_modules
 
 uploads/*.xlsx
 uploads/*.csv
+uploads/*.xls
+uploads/*.json

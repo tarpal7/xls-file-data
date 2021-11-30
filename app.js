@@ -6,6 +6,7 @@ const xlstojson = require("xls-to-json-lc");
 const xlsxtojson = require("xlsx-to-json-lc");
 const csvtojson = require("csvtojson");
 const timeout = require("connect-timeout"); 
+const fs = require("fs");
 const port = process.env.PORT || 3000;
 app.use(timeout(180000));
 app.use(bodyParser.json());
@@ -70,9 +71,9 @@ app.post("/upload", function (req, res) {
       exceltojson = xlstojson;
     } else if (extFile === "csv") {
       csvtojson()
-      // {
-      // delimiter: [";"],
-      // }
+        // {
+        // delimiter: [";"],
+        // }
         .fromFile("./uploads/" + req.file.originalname)
         .then((result) => {
           res.json({
@@ -91,7 +92,7 @@ app.post("/upload", function (req, res) {
         exceltojson(
           {
             input: req.file.path,
-            output: null, //since we don't need output.json
+            output: "./uploads/data.json",
             lowerCaseHeaders: true,
           },
           function (err, result) {
@@ -166,6 +167,33 @@ app.get("/file", function (req, res) {
       res.json({ error_code: 1, err_desc: "Corupted excel file" });
     }
   }
+});
+
+app.get("/check-data", function (req, res) {
+  const result = {};
+  result["success"] = true;
+  result["message"] = "";
+  result["data"] = {};
+
+  const parametrs = req.query;
+  const dni = parametrs.dni;
+  const telefono = parametrs.telefono;
+
+  try {
+    const data = fs.readFileSync("./uploads/data.json", "utf8");
+    const objs = JSON.parse(data);
+
+    const findData = objs.filter((item) => {
+      return item.dni === dni && item.telefono === telefono;
+    })[0];
+    if (findData) {
+      result.data = findData;
+    }
+  } catch (err) {
+    result.success = false;
+    result.message = String(err);
+  }
+  res.json(result);
 });
 
 app.listen(port, function () {
