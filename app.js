@@ -7,6 +7,9 @@ const xlsxtojson = require("xlsx-to-json-lc");
 const csvtojson = require("csvtojson");
 const timeout = require("connect-timeout"); 
 const fs = require("fs");
+const dotenv = require("dotenv");
+dotenv.config({ path: "./.env" });
+
 const port = process.env.PORT || 3000;
 app.use(timeout(180000));
 app.use(bodyParser.json());
@@ -197,5 +200,5 @@ app.get("/check-data", function (req, res) {
 });
 
 app.listen(port, function () {
-  console.log("running on 3000...");
+  console.log(`running on ${port}...`);
 });
