@@ -222,7 +222,6 @@ app.get("/beneficios", function (req, res) {
 
   var getFiles = function (dir, files_) {
     files_ = files_ || [];
-    filesShortPath = [];
     var files = fs.readdirSync(dir);
     for (var i in files) {
       var name =  path.join(dir,files[i]);
@@ -230,7 +229,6 @@ app.get("/beneficios", function (req, res) {
         getFiles(name, files_);
       } else {
         files_.push(name);
-        filesShortPath.push;
       }
     }
     return files_;
@@ -239,8 +237,8 @@ app.get("/beneficios", function (req, res) {
   const dirFiles = path.join(__dirname, 'uploads', 'beneficios');
   
   const allFiles = getFiles(dirFiles);
-  console.log(allFiles);
-    res.send(allFiles);
+  const arrShortNames = allFiles.map(item => {return item.split(__dirname)[1]});
+  res.send(arrShortNames);
 
 });
 
