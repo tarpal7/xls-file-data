@@ -179,18 +179,24 @@ app.get("/check-data", function (req, res) {
   result["data"] = {};
 
   const parametrs = req.query;
-  const dni = parametrs.dni;
-  const telefono = parametrs.telefono;
 
+  console.log(parametrs)
+  const dni = parametrs.dni;
+  const phone = parametrs.phone;
+console.log(dni, phone)
   try {
     const data = fs.readFileSync("./uploads/data.json", "utf8");
     const objs = JSON.parse(data);
 
     const findData = objs.filter((item) => {
-      return item.dni === dni && item.telefono === telefono;
+      return item.dni === dni && item.phone === phone;
     })[0];
     if (findData) {
       result.data = findData;
+    } else {
+      result["success"] = false;
+      result["message"] = "object not found";
+      result["data"] = {};
     }
   } catch (err) {
     result.success = false;
@@ -200,5 +206,5 @@ app.get("/check-data", function (req, res) {
 });
 
 app.listen(port, function () {
-  console.log(`running on ${port}...`);
+  console.log(`------running on ${port}...`);
 });
