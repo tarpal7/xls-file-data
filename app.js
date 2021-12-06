@@ -205,6 +205,45 @@ console.log(dni, phone)
   res.json(result);
 });
 
+
+app.get("/pdf", function (req, res) {
+  const parametrs = req.query;
+  const filePath = parametrs.path;
+
+  fs.readFile(__dirname + filePath, function (err, data) {
+    res.contentType("application/pdf");
+    res.send(data);
+  });
+});
+
+app.get("/beneficios", function (req, res) {
+  var fs = require("fs");
+  var path = require("path");
+
+  var getFiles = function (dir, files_) {
+    files_ = files_ || [];
+    filesShortPath = [];
+    var files = fs.readdirSync(dir);
+    for (var i in files) {
+      var name =  path.join(dir,files[i]);
+      if (fs.statSync(name).isDirectory()) {
+        getFiles(name, files_);
+      } else {
+        files_.push(name);
+        filesShortPath.push;
+      }
+    }
+    return files_;
+  };
+
+  const dirFiles = path.join(__dirname, 'uploads', 'beneficios');
+  
+  const allFiles = getFiles(dirFiles);
+  console.log(allFiles);
+    res.send(allFiles);
+
+});
+
 app.listen(port, function () {
   console.log(`------running on ${port}...`);
 });
